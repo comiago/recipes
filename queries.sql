@@ -1,15 +1,28 @@
 USE recipes;
 
 /*USERS*/
+CREATE TABLE IF NOT EXISTS role (
+    idRole INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL UNIQUE,
+    PRIMARY KEY (idRole)
+);
+
 CREATE TABLE user (
-    idUser INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
-    PRIMARY KEY (idUser)
+    email VARCHAR(255) NOT NULL UNIQUE,
+    idRole INT NOT NULL,
+    approvatedBy INT,
+    approvatedAt TIMESTAMP,
+    PRIMARY KEY (idUser),
+    FOREIGN KEY (idRole)
+        REFERENCES role(idRole) ON DELETE CASCADE
+    FOREIGN KEY (approvatedBy)
+        REFERENCES user(idUser) ON DELETE SET NULL
 );
-
 
 /*RECIPES*/
 CREATE TABLE IF NOT EXISTS recipe (
@@ -17,9 +30,9 @@ CREATE TABLE IF NOT EXISTS recipe (
     title VARCHAR(20) NOT NULL,
     description VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    idUser INT NOT NULL,
+    createdBy INT NOT NULL,
     PRIMARY KEY (idRecipe),
-    FOREIGN KEY (idUser)
+    FOREIGN KEY (createdBy)
         REFERENCES user(idUser) ON DELETE CASCADE
 );
 
@@ -39,6 +52,17 @@ CREATE TABLE IF NOT EXISTS step (
     description VARCHAR(255),
     idRecipe INT NOT NULL,
     PRIMARY KEY (idStep),
+    FOREIGN KEY (idRecipe)
+        REFERENCES recipe(idRecipe) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS IR (
+    idIR INT NOT NULL AUTO_INCREMENT,
+    idIngredient INT NOT NULL,
+    idRecipe INT NOT NULL,
+    PRIMARY KEY (idIR),
+    FOREIGN KEY (idIngredient)
+        REFERENCES ingredient(idIngredient) ON DELETE CASCADE,
     FOREIGN KEY (idRecipe)
         REFERENCES recipe(idRecipe) ON DELETE CASCADE
 );
