@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Vollkorn", Palatino, Times, serif;
+}
+
+body {
+  background-color: #FEFEFE;
+  color: #333333;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333333;
+  color: #FEFEFE;
+  padding: 1rem;
+}
+.header .title {
+  color: #FEFEFE;
+}
+.header .access {
+  color: #FEFEFE;
+}
+.header .menu {
+  display: flex;
+  justify-content: space-between;
+}
+.header .menu a {
+  color: #FEFEFE;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-size: 1.2rem;
+}
+
+.ricetta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #FEFEFE;
+  color: #333333;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.ricetta:hover .title {
+  text-decoration: underline;
+}
+
+.none:hover .title {
+  text-decoration: none;
+}
+
+.form {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #FEFEFE;
+  color: #333333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.form .title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+}
+.form form label {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+.form form input {
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.form form button {
+  padding: 1rem;
+  background-color: #333333;
+  color: #FEFEFE;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.form form button:hover {
+  background-color: rgb(25.5, 25.5, 25.5);
+}
+.form .registerBtn {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+.form .registerBtn a {
+  color: #333333;
+  text-decoration: none;
+}
+.form .registerBtn a:hover {
+  text-decoration: underline;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

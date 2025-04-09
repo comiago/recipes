@@ -1,0 +1,2 @@
+start cmd.exe /K "sass --watch public/assets/stylesheets/style.scss:public/assets/stylesheets/style.css --no-source-map
+start cmd.exe /K "sass --watch public/assets/stylesheets/style.scss:public/assets/stylesheets/style.min.css --style compressed --no-source-map
