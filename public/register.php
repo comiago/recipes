@@ -41,7 +41,7 @@
         <?php unset($_SESSION['success']); ?>
       <?php endif; ?>
       
-      <form action="../src/controllers/registerHandler.php" method="POST">
+      <form action="../src/controllers/registerController.php" method="POST">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required>
 
@@ -62,15 +62,13 @@
 
         <label for="role">Ruolo</label>
         <select name="role" id="role" required>
+          <option value="" selected>--Ruolo</option>
           <?php if ($roles): ?>
           <?php foreach ($roles as $role): ?>
-            <option id="<?= htmlspecialchars($role['id']) ?>"><?= htmlspecialchars($role['name']) ?></option>
+            <option value="<?= htmlspecialchars($role['idRole']) ?>"><?= htmlspecialchars($role['name']) ?></option>
           <?php endforeach; ?>
           <?php else: ?>
-            <div class="ricetta none">
-              <h2 class="title">Nessuna ricetta</h2>
-              <p class="description">Al momento non ci sono ricette disponibili</p>
-            </div>
+            <option value="">No roles available</option>
           <?php endif; ?>
         </select>
 

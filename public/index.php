@@ -22,10 +22,10 @@ $recipes = $recipeModel->getAllRecipes();
   <main class="main">
     <?php if ($recipes): ?>
     <?php foreach ($recipes as $recipe): ?>
-      <div class="ricetta" id="<?= htmlspecialchars($recipe['id']) ?>">
+      <a href="../src/views/recipe.php?id=<?= htmlspecialchars($recipe['idRecipe']) ?>" class="ricetta">
         <h2 class="title"><?= htmlspecialchars($recipe['title']) ?></h2>
         <p class="description"><?= htmlspecialchars($recipe['description']) ?></p>
-      </div>
+      </a>
     <?php endforeach; ?>
     <?php else: ?>
       <div class="ricetta none">

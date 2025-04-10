@@ -9,9 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm_password = $_POST['confirm_password'];
     $firstName = trim($_POST['firstName']);
     $lastName = trim($_POST['lastName']);
+    $role = trim($_POST['role']);
+
+    echo $role;
 
     // Verifica che tutti i campi siano stati riempiti
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($firstName) || empty($lastName)) {
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($firstName) || empty($lastName) || empty($role)) {
         $_SESSION['error'] = 'Tutti i campi sono obbligatori.';
         header('Location: ../../public/register.php');
         exit;
@@ -43,12 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Inserisci il nuovo utente nel database
-    $stmt = $conn->prepare("INSERT INTO user (username, email, password, firstName, lastName) VALUES (:username, :email, :password, :firstName, :lastName)");
+    $stmt = $conn->prepare("INSERT INTO user (username, email, password, firstName, lastName, idROle) VALUES (:username, :email, :password, :firstName, :lastName, :role)");
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $hashed_password);
     $stmt->bindParam(':firstName', $firstName);
     $stmt->bindParam(':lastName', $lastName);
+    $stmt->bindParam(':role', $role);
     $stmt->execute();
 
     $_SESSION['success'] = 'Registrazione avvenuta con successo!';

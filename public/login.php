@@ -31,7 +31,7 @@
         <?php unset($_SESSION['success']); ?>
       <?php endif; ?>
 
-      <form action="../src/controllers/loginHandler.php" method="POST">
+      <form action="../src/controllers/loginController.php" method="POST">
         <label for="username">Nome utente</label>
         <input type="text" name="username" id="username" required>
 

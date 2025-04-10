@@ -23,13 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Verifica la password
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && password_verify($password, $user['password']) && !is_null($user['approvatedBy'])) {
         $_SESSION['user_id'] = $user['idUser'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['email'] = $user['email'];
+        $_SESSION['role'] = $user['idRole'];
         header('Location: ../../public/dashboard.php');
         exit;
-    } else {
+    } else if (is_null($user['approvatedBy'])) {
+        $_SESSION['error'] = 'Il tuo account non è ancora stato approvato. Contatta l\'amministratore.';
+        header('Location: ../../public/login.php');
+        exit;
+    } 
+    else {
         $_SESSION['error'] = 'Il nome utente/email o la password non sono corretti. Riprova.';
         header('Location: ../../public/login.php');
         exit;
