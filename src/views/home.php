@@ -7,8 +7,8 @@
     <p><?= $data['ricette'] ?? 0 ?></p>
   </div>
   <div class="widget">
-    <h3>Approvate</h3>
-    <p><?= $data['approvate'] ?? 0 ?></p>
+    <h3>Ingredienti</h3>
+    <p><?= $data['ingredients'] ?? 0 ?></p>
   </div>
   <div class="widget">
     <h3>Ultime ricette</h3>

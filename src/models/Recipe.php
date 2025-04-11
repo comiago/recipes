@@ -48,11 +48,12 @@ class Recipe {
     }
 
     // Modifica una ricetta esistente
-    public function updateRecipe($idRecipe, $title, $description) {
-        $stmt = $this->pdo->prepare("UPDATE recipe SET title = :title, description = :description WHERE idRecipe = :idRecipe");
+    public function updateRecipe($idRecipe, $title, $description, $amount) {
+        $stmt = $this->pdo->prepare("UPDATE recipe SET title = :title, description = :description, amount = :amount WHERE idRecipe = :idRecipe");
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':idRecipe', $idRecipe);
+        $stmt->bindParam(':amount', $amount);
         $stmt->execute();
     }
 
@@ -63,15 +64,13 @@ class Recipe {
         $stmt->execute();
     }
 
-    // Aggiungi ingredienti alla ricetta
-    public function addIngredientsToRecipe($idRecipe, $ingredients) {
-        foreach ($ingredients as $ingredient) {
-            $stmt = $this->pdo->prepare("INSERT INTO ingredient (name, amount, idRecipe) VALUES (:name, :amount, :idRecipe)");
-            $stmt->bindParam(':name', $ingredient['name']);
-            $stmt->bindParam(':amount', $ingredient['amount']);
-            $stmt->bindParam(':idRecipe', $idRecipe);
-            $stmt->execute();
-        }
+    // Collega un ingrediente a una ricetta
+    public function linkIngredientToRecipe($amount, $idIngredient, $idRecipe) {
+        $stmt = $this->pdo->prepare("INSERT INTO ir (amount, idIngredient, idRecipe) VALUES (:amount, :idIngredient, :idRecipe)");
+        $stmt->bindParam(':amount', $amount);
+        $stmt->bindParam(':idIngredient', $idIngredient);
+        $stmt->bindParam(':idRecipe', $idRecipe);
+        $stmt->execute();
     }
 
     // Aggiungi i passaggi alla ricetta
@@ -89,7 +88,7 @@ class Recipe {
 
     // Recupera gli ingredienti di una ricetta
     public function getIngredientsByRecipe($idRecipe) {
-        $stmt = $this->pdo->prepare("SELECT * FROM ingredient WHERE idRecipe = :idRecipe");
+        $stmt = $this->pdo->prepare("SELECT * FROM ir JOIN ingredient ON ir.idIngredient = ingredient.idIngredient WHERE ir.idRecipe = :idRecipe");
         $stmt->bindParam(':idRecipe', $idRecipe);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

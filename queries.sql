@@ -40,11 +40,7 @@ CREATE TABLE IF NOT EXISTS recipe (
 CREATE TABLE IF NOT EXISTS ingredient (
 	idIngredient INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    amount VARCHAR(255) NOT NULL,
-    idRecipe INT NOT NULL,
-    PRIMARY KEY (idIngredient),
-    FOREIGN KEY (idRecipe)
-        REFERENCES recipe(idRecipe) ON DELETE CASCADE
+    PRIMARY KEY (idIngredient)
 );
 
 CREATE TABLE IF NOT EXISTS step (
@@ -56,3 +52,15 @@ CREATE TABLE IF NOT EXISTS step (
     FOREIGN KEY (idRecipe)
         REFERENCES recipe(idRecipe) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS IR (
+    idIR INT NOT NULL AUTO_INCREMENT,
+    amount VARCHAR(255) NOT NULL,
+    idIngredient INT NOT NULL,
+    idRecipe INT NOT NULL,
+    PRIMARY KEY (idIR),
+    FOREIGN KEY (idIngredient)
+        REFERENCES ingredient(idIngredient) ON DELETE CASCADE,
+    FOREIGN KEY (idRecipe)
+        REFERENCES recipe(idRecipe) ON DELETE CASCADE
+)

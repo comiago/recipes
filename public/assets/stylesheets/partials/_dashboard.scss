@@ -104,3 +104,108 @@
     margin: 2rem 0;
   }
 }
+
+/* Contenitore delle ricette */
+.myRecipes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  .ricetta {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ricetta:hover .title {
+    text-decoration: none;
+  }
+  
+  .ricetta .title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .ricetta .description {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 10px;
+  }
+  
+  /* Stili per il box dei comandi (Modifica / Elimina) */
+  .commands {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .commands a {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #fff;
+    background-color: $black;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 1rem;
+
+    i {
+      margin-right: 5px;
+    }
+  }
+  
+  .commands a:hover {
+    background-color: darken($black, 20%);
+  }  
+}
+
+
+.ingredients {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+/* Stile per ogni scheda ingrediente */
+.ingredient {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ingredient:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Titolo dell'ingrediente */
+.ingredient .title {
+  font-size: 1.2em;
+  color: $black;
+  margin: 0 0 10px;
+}
+
+/* Descrizione nel caso non vi siano ingredienti */
+.ingredient .description {
+  font-size: 1em;
+  color: #7F8C8D;
+}
+
+/* Responsive: per schermi piccoli */
+@media (max-width: 600px) {
+  .ingredients {
+    grid-template-columns: 1fr;
+  }
+}

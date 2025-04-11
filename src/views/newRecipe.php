@@ -35,6 +35,7 @@
     <label>Ingredienti</label>
     <div id="ingredienti" class="ingredienti-group">
       <div class="ingrediente">
+        <h2>1:</h2>
         <input type="text" name="ingredients[0][name]" placeholder="Nome ingrediente" required>
         <input type="text" name="ingredients[0][amount]" placeholder="Quantità" required>
       </div>

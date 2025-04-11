@@ -5,6 +5,7 @@ function aggiungiIngrediente() {
   const container = document.getElementById('ingredienti');
   container.insertAdjacentHTML('beforeend', `
     <div class="ingrediente">
+      <h2>${ingredienteIndex}:</h2>
       <input type="text" name="ingredients[${ingredienteIndex}][name]" placeholder="Nome ingrediente" required>
       <input type="text" name="ingredients[${ingredienteIndex}][amount]" placeholder="Quantità" required>
     </div>

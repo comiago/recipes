@@ -17,6 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         case 'create':
             $controller->create();
             break;
+
+        case 'update':
+            $recipeId = $_POST['recipe_id'];
+            $controller->update($recipeId);
+            break;
     }
 }
 
@@ -55,7 +60,8 @@ class RecipeController {
             // Aggiungi ingredienti
             foreach ($ingredients as $ingredient) {
                 $name = ucwords(strtolower(trim($ingredient['name'])));
-                $ingredientId = $ingredientModel->addIngredient($name, $ingredient['amount'], $recipeId);
+                $ingredientId = $ingredientModel->addIngredient($name);
+                $recipeModel->linkIngredientToRecipe($ingredient['amount'], $ingredientId, $recipeId);
             }
 
             // Aggiungi passaggi
@@ -71,12 +77,13 @@ class RecipeController {
     }
 
     // Modifica una ricetta esistente
-    public function edit($recipeId) {
+    public function update($recipeId) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $title = $_POST['title'];
             $description = $_POST['description'];
             $ingredients = $_POST['ingredients']; // Array di ingredienti
             $steps = $_POST['steps']; // Array di passaggi
+            $amount = $_POST['amount'];
 
             $db = new Database();
             $conn = $db->connect();
@@ -86,21 +93,22 @@ class RecipeController {
             $stepModel = new Step($conn);
 
             // Modifica la ricetta
-            $recipeModel->updateRecipe($recipeId, $title, $description);
+            $recipeModel->updateRecipe($recipeId, $title, $description, $amount);
 
             // Modifica gli ingredienti e i passaggi
-            $recipeModel->clearIngredients($recipeId);
+            $ingredientModel->deleteIngredientsByRecipe($recipeId);
             foreach ($ingredients as $ingredient) {
-                $ingredientId = $ingredientModel->addIngredient($ingredient['name'], $ingredient['amount']);
-                $recipeModel->linkIngredientToRecipe($ingredientId, $recipeId);
+                $name = ucwords(strtolower(trim($ingredient['name'])));
+                $ingredientId = $ingredientModel->addIngredient($name);
+                $recipeModel->linkIngredientToRecipe($ingredient['amount'], $ingredientId, $recipeId);
             }
 
-            $recipeModel->clearSteps($recipeId);
+            $stepModel->deleteStepsByRecipe($recipeId);
             foreach ($steps as $step_number => $step_desc) {
-                $stepModel->addStep($step_number, $step_desc, $recipeId);
+                $stepModel->addStep($step_number, $step_desc['description'], $recipeId);
             }
 
-            header('Location: dashboard.php');
+            header('Location: ../../public/dashboard.php');
             exit;
         }
 

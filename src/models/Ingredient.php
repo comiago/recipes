@@ -8,12 +8,22 @@ class Ingredient {
     }
 
     // Aggiungi un singolo ingrediente alla tabella
-    public function addIngredient($name, $amount, $idRecipe) {
-        $stmt = $this->pdo->prepare("INSERT INTO ingredient (name, amount, idRecipe) VALUES (:name, :amount, :idRecipe)");
+    public function addIngredient($name) {
+        // Controlla se l'ingrediente esiste già
+        $ingredient = $this->getIngredientByName($name);
+        if ($ingredient) {
+            return $ingredient['idIngredient'];  // Ritorna l'ID dell'ingrediente esistente
+        }
+        $stmt = $this->pdo->prepare("INSERT INTO ingredient (name) VALUES (:name)");
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':amount', $amount);
-        $stmt->bindParam(':idRecipe', $idRecipe);
         $stmt->execute();
+        return $this->pdo->lastInsertId();  // Ritorna l'ID dell'ingrediente appena inserita
+    }
+
+    public function getAllIngredients() {
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredient");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Recupera tutti gli ingredienti per una ricetta
@@ -33,8 +43,14 @@ class Ingredient {
 
     // Elimina tutti gli ingredienti collegati a una ricetta (utile per modifica)
     public function deleteIngredientsByRecipe($idRecipe) {
-        $stmt = $this->pdo->prepare("DELETE FROM ingredient WHERE idRecipe = :idRecipe");
+        $stmt = $this->pdo->prepare("DELETE FROM ir WHERE idRecipe = :idRecipe");
         $stmt->bindParam(':idRecipe', $idRecipe);
+        $stmt->execute();
+    }
+
+    public function unlinkIngredient($idIR) {
+        $stmt = $this->pdo->prepare("DELETE FROM ir WHERE idIR = :idIR");
+        $stmt->bindParam(':idIR', $idIR);
         $stmt->execute();
     }
 }
